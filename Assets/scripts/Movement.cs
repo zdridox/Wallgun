@@ -12,11 +12,12 @@ public class Movement : MonoBehaviour
     int jumped;
     int Dashed;
     float Uspeed;
+    bool AbleToWallRun = true;
+    bool AbleToMove = true;
 
     Vector3 Vel;
     public Transform Cam;
 
-    public Transform Gcheck;
     float Gdist = 0.4f;
     public LayerMask Gmask;
     public LayerMask Wmask;
@@ -40,9 +41,12 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         CheckForWall();
         WallrunInput();
+
+        Debug.DrawRay(Cam.transform.position, Cam.transform.forward * 5, Color.cyan); // crosshair
+
+        
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
@@ -54,7 +58,7 @@ public class Movement : MonoBehaviour
 
         Vector3 move = transform.right * x + transform.forward * z;
 
-        isGround = Physics.CheckSphere(Gcheck.position, Gdist, Gmask);
+        isGround = Physics.Raycast(transform.position, -transform.up, 2f, Gmask);
 
         if(isGround && Vel.y < 0)
         {
@@ -65,12 +69,41 @@ public class Movement : MonoBehaviour
         {
             jumped = 0;
             Dashed = 0;
+            Debug.DrawRay(transform.position, -transform.up * 2, Color.green);  // ground
+        } else
+        {
+            Debug.DrawRay(transform.position, -transform.up * 2, Color.blue);  // ground
+        }
+
+        if(Wallleft)
+        {
+            Debug.DrawRay(transform.position, -transform.right * 1, Color.green); // left
+        } else
+        {
+            Debug.DrawRay(transform.position, -transform.right * 1, Color.blue); // left
+        }
+
+        if(Wallright)
+        {
+            Debug.DrawRay(transform.position, transform.right * 1, Color.green); // right
+        } else
+        {
+            Debug.DrawRay(transform.position, transform.right * 1, Color.blue); // right
+        }
+
+        if(Wallrun)
+        {
+            jumped = 0;
+            Dashed = 0;
         }
 
 
 
 
-        controller.Move(move * Uspeed * Time.deltaTime);
+        if(AbleToMove)
+        {
+            controller.Move(move * Uspeed * Time.deltaTime);
+        }
 
         Vel.y += Ugravity * Time.deltaTime;
         controller.Move(Vel * Time.deltaTime);
@@ -96,11 +129,49 @@ public class Movement : MonoBehaviour
         }
     }
 
+    IEnumerator MovePause()
+    {
+        AbleToMove = false;
+        AbleToWallRun = false;
+        yield return new WaitForSeconds(0.2f);
+        AbleToMove = true;
+        AbleToWallRun = true;
+        
+    }
+
+    IEnumerator OutofWallLeft()
+    {
+        float s2Time = Time.time;
+        while(Time.time < s2Time + 0.2f)
+        {
+            controller.Move(transform.up * 8 * Time.deltaTime);
+            controller.Move(transform.right * 12 * Time.deltaTime);     
+            StopWallR();
+            jumped = 0;
+            Dashed = 0;
+            yield return null;
+        }
+    }
+
+    IEnumerator OutofWallRight()
+    {
+        float s2Time = Time.time;
+        while (Time.time < s2Time + 0.2f)
+        {
+            controller.Move(transform.up * 8 * Time.deltaTime);
+            controller.Move(-transform.right * 12 * Time.deltaTime);
+            StopWallR();
+            jumped = 0;
+            Dashed = 0;
+            yield return null;
+        }
+    }
+
 
     void WallrunInput()
     {
-        if (Input.GetKey(KeyCode.D) && Wallright) StartWallR();
-        if (Input.GetKey(KeyCode.A) && Wallleft) StartWallR();
+        if (Input.GetKey(KeyCode.D) && Wallright && AbleToWallRun) StartWallR();
+        if (Input.GetKey(KeyCode.A) && Wallleft && AbleToWallRun) StartWallR();
 
     }
 
@@ -116,16 +187,27 @@ public class Movement : MonoBehaviour
         Ugravity = 0f;
         Wallrun = true;
 
-        if (controller.velocity.magnitude <= MaxWallSpeed)
+        if(Input.GetKey(KeyCode.Space))
         {
-            controller.Move(transform.forward * WallrunSpeed * Time.deltaTime);
+            StartCoroutine(MovePause());
+            if (Wallleft) { StartCoroutine(OutofWallLeft()); }
+            if (Wallright) { StartCoroutine(OutofWallRight()); }
 
-            if(Wallright)
+
+        } else
+        {
+            if (controller.velocity.magnitude <= MaxWallSpeed)
             {
-                controller.Move(transform.right * WallrunSpeed / 5 * Time.deltaTime);
-            } else
-            {
-                controller.Move(-transform.right * WallrunSpeed / 5 * Time.deltaTime);
+                controller.Move(transform.forward * WallrunSpeed * Time.deltaTime);
+
+                if (Wallright)
+                {
+                    controller.Move(transform.right * WallrunSpeed / 5 * Time.deltaTime);
+                }
+                else
+                {
+                    controller.Move(-transform.right * WallrunSpeed / 5 * Time.deltaTime);
+                }
             }
         }
     }
@@ -134,6 +216,7 @@ public class Movement : MonoBehaviour
     {
         Ugravity = gravity;
         Wallrun = false;
+
     }
 
     void CheckForWall()
@@ -146,16 +229,6 @@ public class Movement : MonoBehaviour
             StopWallR();
         }
 
-        if(Wallleft || Wallright)
-        {
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                jumped = 0;
-                Dashed = 0;
-                Jump();
-
-            }
-        }
     }
 
 
