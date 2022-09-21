@@ -45,6 +45,7 @@ public class Movement : MonoBehaviour
         CheckForWall();
         WallrunInput();
         DrawRays();
+        Crouch();
 
         Debug.DrawRay(Cam.transform.position, Cam.transform.forward * 5, Color.cyan); // crosshair
 
@@ -61,10 +62,10 @@ public class Movement : MonoBehaviour
 
         isGround = Physics.Raycast(transform.position, -transform.up, 2f, Gmask);
 
-        if(isGround && Vel.y < 0)
-        {
-            Vel.y = -2f;
-        }
+      //  if(isGround && Vel.y < 0)
+       // {
+      //      Vel.y = -2f;
+      //  }
 
         if(isGround && DDJres)
         {
@@ -139,6 +140,8 @@ public class Movement : MonoBehaviour
         {
             Debug.DrawRay(transform.position + transform.up * 0.2f, transform.right * 3f, Color.blue);
         }
+
+
     }
     IEnumerator Dash()
     {
@@ -157,17 +160,29 @@ public class Movement : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
         AbleToMove = true;
         AbleToWallRun = true;
-        
+
+
+    }
+
+    void Crouch()
+    {
+        if(Input.GetKey(KeyCode.LeftControl))
+        {
+            controller.height = 1f;
+        } else
+        {
+            controller.height = 3f;
+        }
     }
 
     IEnumerator OutofWallLeft()
     {
         float s2Time = Time.time;
-        while(Time.time < s2Time + 0.2f)
+        while(Time.time < s2Time + 0.3f)
         {
             controller.Move(transform.up * 8 * Time.deltaTime);
-            controller.Move(transform.right * 12 * Time.deltaTime);
-            controller.Move(transform.forward * 4 * Time.deltaTime);
+            controller.Move(transform.right * 6 * Time.deltaTime);
+            controller.Move(transform.forward * Uspeed * Time.deltaTime);
             StopWallR();
             jumped = 1;
             Dashed = 0;
@@ -178,11 +193,11 @@ public class Movement : MonoBehaviour
     IEnumerator OutofWallRight()
     {
         float s2Time = Time.time;
-        while (Time.time < s2Time + 0.2f)
+        while (Time.time < s2Time + 0.3f)
         {
             controller.Move(transform.up * 8 * Time.deltaTime);
-            controller.Move(-transform.right * 12 * Time.deltaTime);
-            controller.Move(transform.forward * 4 * Time.deltaTime);
+            controller.Move(-transform.right * 6 * Time.deltaTime);
+            controller.Move(transform.forward * Uspeed * Time.deltaTime);
             StopWallR();
             jumped = 1;
             Dashed = 0;
@@ -216,8 +231,7 @@ public class Movement : MonoBehaviour
         Ugravity = 0f;
         Wallrun = true;
 
-
-        if (controller.velocity.magnitude <= MaxWallSpeed)
+            if (controller.velocity.magnitude <= MaxWallSpeed)
             {
                 controller.Move(Cam.transform.forward * WallrunSpeed * Time.deltaTime);
 
@@ -230,6 +244,7 @@ public class Movement : MonoBehaviour
                     controller.Move(-transform.right * WallrunSpeed / 10 * Time.deltaTime);
                 }
             }
+        
     }
 
     void StopWallR()
@@ -241,19 +256,20 @@ public class Movement : MonoBehaviour
 
     void CheckForWall()
     {
-        Wallright = Physics.Raycast(transform.position, transform.right, 1f, Wmask);
-        Wallleft = Physics.Raycast(transform.position, -transform.right, 1f, Wmask);
-        JumpWallleft = Physics.Raycast(transform.position + transform.up * 0.2f, -transform.right, 3f, Wmask);
-        JumpWallright = Physics.Raycast(transform.position + transform.up * 0.2f, transform.right, 3f, Wmask);
+            Wallright = Physics.Raycast(transform.position, transform.right, 1f, Wmask);
+            Wallleft = Physics.Raycast(transform.position, -transform.right, 1f, Wmask);
+            JumpWallleft = Physics.Raycast(transform.position + transform.up * 0.2f, -transform.right, 3f, Wmask);
+            JumpWallright = Physics.Raycast(transform.position + transform.up * 0.2f, transform.right, 3f, Wmask);
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
 
-            if (JumpWallleft && !isGround) { StartCoroutine(OutofWallLeft()); StartCoroutine(MovePause()); }
-            if (JumpWallright && !isGround) { StartCoroutine(OutofWallRight()); StartCoroutine(MovePause()); }
+                if (JumpWallleft && !isGround) { StartCoroutine(OutofWallLeft()); StartCoroutine(MovePause()); }
+                if (JumpWallright && !isGround) { StartCoroutine(OutofWallRight()); StartCoroutine(MovePause()); }
 
 
-        }
+            }
+        
 
 
         if (!Wallleft && !Wallright)
