@@ -3,6 +3,7 @@
 Gra FPP Parkour </br>
 Mateusz Zdrodowski - Programowanie </br>
 Tomasz Broda - 3D design** </br>
-- Wallrun </br>
-- DoubleJump </br>
-- Dash
+- Wallrun A || D  </br>
+- DoubleJump Spacja </br>
+- Dash  Shift </br>
+- Kucanie Ctrl
