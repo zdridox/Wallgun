@@ -2,7 +2,8 @@
 **Projekt szkolny. </br>
 Gra FPP Parkour </br>
 Mateusz Zdrodowski - Programowanie </br>
-Tomasz Broda - 3D design** </br>
+Tomasz Broda - Dzwiek
+Michał Nalepa - 3D/2D** </br>
 - WallRun A || D or A || D + W Fast WallRun </br>
 - DoubleJump Spacja </br>
 - Dash  Shift </br>
