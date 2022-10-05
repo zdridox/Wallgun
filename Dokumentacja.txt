@@ -1,0 +1,8 @@
+Nazwa gry - narazie brak
+FPP Parkour
+Sterowanie :
+WASD - Poruszanie
+Spacja - Skok / Skok ze ściany
+Cntrl - kucanie / ślizganie
+Shift - Dash
+Aby Rozpocząć WallRun trzeba wskoczyć na ścianę 
