@@ -1,4 +1,4 @@
-# MZ-TB-LKGW-Projekt </br>
+# GameMaker Grupa8 </br>
 **Projekt szkolny. </br>
 Gra FPP Parkour </br>
 Mateusz Zdrodowski - Programowanie </br>
