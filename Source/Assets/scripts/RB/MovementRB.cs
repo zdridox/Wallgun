@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class MovementRB : MonoBehaviour
 {
-    public float Speed;
-    public float AirSpeed;
-    public float WallrunSpeed;
-    public float CrouchWalkSpeed;
-    public float DashSpeed;
+    [SerializeField] float Speed;
+    [SerializeField] float AirSpeed;
+    [SerializeField] float WallrunSpeed;
+    [SerializeField] float CrouchWalkSpeed;
+    [SerializeField] float DashSpeed;
     float horizontal;
     float vertical;
     float DownRaycastLength;
@@ -16,37 +16,39 @@ public class MovementRB : MonoBehaviour
     Vector3 MoveDir;
     Vector3 MoveDirCrouch;
     Rigidbody rb;
-    public float JumpForce;
-    public float JumpCooldown;
-    public float DashCoolDown;
+    [SerializeField] float JumpForce;
+    [SerializeField] float JumpCooldown;
+    [SerializeField] float DashCoolDown;
     bool CanJump = true;
     bool CanMove = true;
-    bool WallLeft;
-    bool WallRight;
+    [HideInInspector] public bool WallLeft;
+    [HideInInspector] public bool WallRight;
+    bool DashCour;
     bool CanDash = true;
     bool CanMultiSlide = true;
     bool DownForceAdded = false;
+    bool CanMuSlideCr = true;
 
-    public float GroundDrag;
-    public float airDrag;
-    public float WallRunDrag;
-    public float CrouchDrag;
-    public LayerMask Ground;
-    public LayerMask Slide;
-    public LayerMask Wall;
-    public LayerMask BlockCrouch;
+    [SerializeField] float GroundDrag;
+    [SerializeField] float airDrag;
+    [SerializeField] float WallRunDrag;
+    [SerializeField] float CrouchDrag;
+    [SerializeField] LayerMask Ground;
+    [SerializeField] LayerMask Slide;
+    [SerializeField] LayerMask Wall;
+    [SerializeField] LayerMask BlockCrouch;
     bool isGround;
     bool isSliding;
     bool isWallrunning;
     bool SmthAbove;
-    public Transform orientation;
-    public Transform Camera;
+    [SerializeField] Transform orientation;
+    [SerializeField] Transform Camera;
     bool CanAdd = true;
     bool Cntrl;
     int Jumped;
     int Dashed;
-    public int MultiJumps;
-    public int Dashes;
+    [SerializeField] int MultiJumps;
+    [SerializeField] int Dashes;
 
     void Start()
     {
@@ -95,10 +97,11 @@ public class MovementRB : MonoBehaviour
 
         Drag();
 
-        if(Input.GetKey(KeyCode.LeftControl) && isGround && CanAdd)
+        if(Input.GetKey(KeyCode.LeftControl) && isGround && CanAdd && CanMuSlideCr)
         {
             rb.velocity = rb.velocity * 1.8f;
             CanAdd = false;
+            StartCoroutine(SlideCrouchCoolDown());
         }  else
         {
             if(isGround && !CanAdd && !Cntrl)
@@ -143,7 +146,7 @@ public class MovementRB : MonoBehaviour
         } else
         {
             CanJump = true;
-            CanDash = true;
+            if(!DashCour) CanDash = true;
         }
     }
 
@@ -215,8 +218,17 @@ public class MovementRB : MonoBehaviour
     IEnumerator DashCooolDooown()
     {
         CanDash = false;
+        DashCour = true;
         yield return new WaitForSeconds(DashCoolDown);
         CanDash = true;
+        DashCour = false;
+    }
+
+    IEnumerator SlideCrouchCoolDown()
+    {
+        CanMuSlideCr = false;
+        yield return new WaitForSeconds(1.5f);
+        CanMuSlideCr = true;
     }
 
     IEnumerator JumpCoolDownMaker()
@@ -227,8 +239,8 @@ public class MovementRB : MonoBehaviour
 
     IEnumerator MultiSliding()
     {
-        rb.velocity = rb.velocity * 1.3f;
-        yield return new WaitForSeconds(0.3f);
+        rb.velocity = rb.velocity * 1.5f;
+        yield return new WaitForSeconds(0.2f);
         CanMultiSlide = true;
     }
 
@@ -260,7 +272,7 @@ public class MovementRB : MonoBehaviour
     }
 
     void OutOfWallRight()
-    {
+    { 
         rb.AddForce(-orientation.right * 15, ForceMode.Impulse);
         rb.AddForce(orientation.up * 12, ForceMode.Impulse);
         Jumped = 0;

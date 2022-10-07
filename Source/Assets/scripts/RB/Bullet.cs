@@ -2,8 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rotate : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
+    public float DestroyAfter;
+
+    private void Awake()
+    {
+        Destroy(gameObject, DestroyAfter);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +20,11 @@ public class Rotate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0.3f, 1, 0.3f);
+        
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+       
     }
 }

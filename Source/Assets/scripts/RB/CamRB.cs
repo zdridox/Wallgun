@@ -9,6 +9,16 @@ public class CamRB : MonoBehaviour
     public Transform PlayerModel;
     float xR;
     float yR;
+    float camTilt;
+    public MovementRB mvrb;
+    bool CallerR;
+    bool CallerL;
+    bool CallerRmR;
+    bool CallerRmL;
+    public float tiltspeed;
+    bool tiltL;
+    bool tiltR;
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,11 +36,93 @@ public class CamRB : MonoBehaviour
         xR -= mY;
         xR = Mathf.Clamp(xR, -90f, 90f);
 
-        transform.rotation = Quaternion.Euler(xR, yR, 0);
+        transform.rotation = Quaternion.Euler(xR, yR, camTilt);
         orientation.rotation = Quaternion.Euler(0, yR, 0);
         PlayerModel.rotation = Quaternion.Euler(0, yR, 0);
 
+        if(mvrb.WallLeft)
+        {
+            CallerL = true;
+        }  else
+        {
+            if(tiltL)
+            {
+                CallerRmL = true;
+                tiltL = false;
+                CallerL = false;
+            }
+        }
+
+
+        if(mvrb.WallRight)
+        {
+            CallerR = true;
+        } else
+        {
+            if(tiltR)
+            {
+                CallerRmR = true;
+                tiltR = false;
+                CallerR = false;
+            }
+        }
+
+
+        if (CallerR) CallTiltR();
+        if (CallerL) CallTiltL();
+        if (CallerRmR) CallremoveR();
+        if (CallerRmL) CallremoveL();
+
+        //Debug.Log(camTilt + "," + CallerL + "," + CallerR + "," + CallerRmL + "," + CallerRmR);
     }
+
+
+    void CallTiltL()
+    {
+        tiltL = true;
+        if (camTilt > -10 && !tiltR)
+        {
+            camTilt -= Time.deltaTime * tiltspeed;
+        } 
+
+    }
+
+
+    void CallTiltR()
+    {
+        tiltR = true;
+        if (camTilt < 10 && !tiltL)
+        {
+            camTilt += Time.deltaTime * tiltspeed;
+        } 
+
+    }
+
+    void CallremoveL()
+    {
+        if (camTilt < 0 && camTilt != 0)
+        {
+            camTilt += Time.deltaTime * tiltspeed;
+        } else
+        {
+            CallerRmL = false;
+            camTilt = 0;
+        }
+    }
+
+    void CallremoveR()
+    {
+        if (camTilt > 0 && camTilt != 0)
+        {
+            camTilt -= Time.deltaTime * tiltspeed;
+        } else
+        {
+            CallerRmR = false;
+            camTilt = 0;
+        }
+    }
+
+
 
 
 }
