@@ -5,4 +5,4 @@ WASD - Poruszanie
 Spacja - Skok / Skok ze ściany
 Cntrl - kucanie / ślizganie
 Shift - Dash
-Aby Rozpocząć WallRun trzeba wskoczyć na ścianę 
+Aby Rozpocząć WallRun trzeba wskoczyć na ścianę + A || D

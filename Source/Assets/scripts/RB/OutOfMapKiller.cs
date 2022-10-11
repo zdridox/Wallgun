@@ -5,6 +5,7 @@ using UnityEngine;
 public class OutOfMapKiller : MonoBehaviour
 {
     public Transform spawn;
+    public Transform Player;
 
     // Start is called before the first frame update
     void Start()
@@ -15,11 +16,14 @@ public class OutOfMapKiller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+   
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        collision.transform.position = spawn.transform.position;
+        if(other.transform.tag == "Player") Player.transform.position = spawn.transform.position;  else
+        {
+            other.transform.position = spawn.transform.position;
+        }
     }
 }

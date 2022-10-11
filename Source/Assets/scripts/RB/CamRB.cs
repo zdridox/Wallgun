@@ -40,7 +40,7 @@ public class CamRB : MonoBehaviour
         orientation.rotation = Quaternion.Euler(0, yR, 0);
         PlayerModel.rotation = Quaternion.Euler(0, yR, 0);
 
-        if(mvrb.WallLeft)
+        if(mvrb.WallLeft && !mvrb.isGround && Input.GetKey(KeyCode.A))
         {
             CallerL = true;
         }  else
@@ -54,7 +54,7 @@ public class CamRB : MonoBehaviour
         }
 
 
-        if(mvrb.WallRight)
+        if(mvrb.WallRight && !mvrb.isGround && Input.GetKey(KeyCode.D))
         {
             CallerR = true;
         } else
@@ -83,7 +83,10 @@ public class CamRB : MonoBehaviour
         if (camTilt > -10 && !tiltR)
         {
             camTilt -= Time.deltaTime * tiltspeed;
-        } 
+        } else
+        {
+            camTilt = -10;
+        }
 
     }
 
@@ -94,7 +97,10 @@ public class CamRB : MonoBehaviour
         if (camTilt < 10 && !tiltL)
         {
             camTilt += Time.deltaTime * tiltspeed;
-        } 
+        } else
+        {
+            camTilt = 10;
+        }
 
     }
 

@@ -37,7 +37,7 @@ public class MovementRB : MonoBehaviour
     [SerializeField] LayerMask Slide;
     [SerializeField] LayerMask Wall;
     [SerializeField] LayerMask BlockCrouch;
-    bool isGround;
+    [HideInInspector] public bool isGround;
     bool isSliding;
     bool isWallrunning;
     bool SmthAbove;
@@ -116,7 +116,7 @@ public class MovementRB : MonoBehaviour
             StartCoroutine(MultiSliding());
         }
 
-        if((WallLeft || WallRight) && !isGround) {
+        if((WallLeft || WallRight) && !isGround && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))) {
 
             if (!isWallrunning) StartWallrun(); 
             
@@ -139,7 +139,7 @@ public class MovementRB : MonoBehaviour
             Jumped = 0;
         } 
 
-        if(WallLeft || WallRight)
+        if((WallLeft || WallRight) && !isGround)
         {
             CanDash = false;
             CanJump = false;
@@ -148,6 +148,7 @@ public class MovementRB : MonoBehaviour
             CanJump = true;
             if(!DashCour) CanDash = true;
         }
+
     }
 
     private void FixedUpdate()
@@ -167,12 +168,12 @@ public class MovementRB : MonoBehaviour
             StartCoroutine(JumpCoolDownMaker());
         }
 
-        if (WallLeft && Input.GetKeyDown(KeyCode.Space))
+        if (WallLeft && Input.GetKeyDown(KeyCode.Space) && !isGround)
         {
             OutOfWallLeft();
         }
 
-        if (WallRight && Input.GetKeyDown(KeyCode.Space))
+        if (WallRight && Input.GetKeyDown(KeyCode.Space) && !isGround)
         {
             OutOfWallRight();
         }
