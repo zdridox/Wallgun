@@ -1,4 +1,4 @@
-# GameMaker Grupa8 (Airguin) </br>
+# GameMaker Grupa8 (Wallz) </br>
 **Projekt szkolny. </br>
 Gra FPP Parkour </br>
 Mateusz Zdrodowski(zdridox) - Programowanie </br>
