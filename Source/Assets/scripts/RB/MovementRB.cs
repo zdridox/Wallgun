@@ -19,6 +19,7 @@ public class MovementRB : MonoBehaviour
     [SerializeField] float JumpForce;
     [SerializeField] float JumpCooldown;
     [SerializeField] float DashCoolDown;
+    [SerializeField] float WallRunTime;
     bool CanJump = true;
     bool CanMove = true;
     [HideInInspector] public bool WallLeft;
@@ -49,6 +50,7 @@ public class MovementRB : MonoBehaviour
     int Dashed;
     [SerializeField] int MultiJumps;
     [SerializeField] int Dashes;
+
 
     void Start()
     {
@@ -116,15 +118,25 @@ public class MovementRB : MonoBehaviour
             StartCoroutine(MultiSliding());
         }
 
-        if((WallLeft || WallRight) && !isGround && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))) {
+        if(WallLeft && !isGround && Input.GetKey(KeyCode.A)) {
 
             if (!isWallrunning) StartWallrun(); 
             
                
         } else
         {
-            if (isWallrunning) StopWallrun();
-        }
+            if(WallRight && !isGround && Input.GetKey(KeyCode.D))
+            {
+                if (!isWallrunning) StartWallrun();
+            } else
+            {
+                if (isWallrunning) StopWallrun();
+            }
+
+        }  
+        
+
+        
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash && Dashed < Dashes)
         {
@@ -170,12 +182,12 @@ public class MovementRB : MonoBehaviour
 
         if (WallLeft && Input.GetKeyDown(KeyCode.Space) && !isGround)
         {
-            OutOfWallLeft();
+            OutOfWallLeft(true);
         }
 
         if (WallRight && Input.GetKeyDown(KeyCode.Space) && !isGround)
         {
-            OutOfWallRight();
+            OutOfWallRight(true);
         }
     }
 
@@ -211,7 +223,7 @@ public class MovementRB : MonoBehaviour
 
     void Jump()
     {
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        //rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * JumpForce, ForceMode.Impulse);
         Jumped++;
     }
@@ -245,9 +257,11 @@ public class MovementRB : MonoBehaviour
         CanMultiSlide = true;
     }
 
+
     void StartWallrun()
     {
         isWallrunning = true;
+
     }
 
     void StopWallrun()
@@ -258,25 +272,35 @@ public class MovementRB : MonoBehaviour
 
     void WallRunMovement()
     {
-        rb.useGravity = false;
-        rb.AddForce(Camera.transform.forward * WallrunSpeed, ForceMode.Force);
-        if (WallLeft) rb.AddForce(-orientation.transform.right * 20f, ForceMode.Force);
-        if (WallRight) rb.AddForce(orientation.transform.right * 20f, ForceMode.Force);
+
+            rb.useGravity = false;
+            rb.AddForce(Camera.transform.forward * WallrunSpeed, ForceMode.Force);
+            if (WallLeft) rb.AddForce(-orientation.transform.right * 20f, ForceMode.Force);
+            if (WallRight) rb.AddForce(orientation.transform.right * 20f, ForceMode.Force);
+        
 
     }
 
-    void OutOfWallLeft()
+    void OutOfWallLeft(bool JumpL)
     {
-        rb.AddForce(orientation.right * 15, ForceMode.Impulse);
-        rb.AddForce(orientation.up * 12, ForceMode.Impulse);
         Jumped = 0;
+        StopWallrun();
+        if(JumpL)
+        {
+            rb.AddForce(orientation.right * 15, ForceMode.Impulse);
+            rb.AddForce(orientation.up * 12, ForceMode.Impulse);
+        }
     }
 
-    void OutOfWallRight()
+    void OutOfWallRight(bool JumpR)
     { 
-        rb.AddForce(-orientation.right * 15, ForceMode.Impulse);
-        rb.AddForce(orientation.up * 12, ForceMode.Impulse);
         Jumped = 0;
+        StopWallrun();
+        if (JumpR)
+        {
+            rb.AddForce(-orientation.right * 15, ForceMode.Impulse);
+            rb.AddForce(orientation.up * 12, ForceMode.Impulse);
+        }
     }
 }
 //                                                    
