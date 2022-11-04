@@ -19,13 +19,13 @@ public class MovementRB : MonoBehaviour
     [SerializeField] float JumpForce;
     [SerializeField] float JumpCooldown;
     [SerializeField] float DashCoolDown;
-    [SerializeField] float WallRunTime;
     bool CanJump = true;
     bool CanMove = true;
     [HideInInspector] public bool WallLeft;
     [HideInInspector] public bool WallRight;
     bool DashCour;
     bool CanDash = true;
+    bool CanKick = true;
     bool CanMultiSlide = true;
     bool DownForceAdded = false;
     bool CanMuSlideCr = true;
@@ -70,10 +70,10 @@ public class MovementRB : MonoBehaviour
         SmthAbove = Physics.Raycast(orientation.transform.position, Vector3.up, UpRaycastLength, BlockCrouch);
         WallLeft = Physics.Raycast(orientation.transform.position, -orientation.transform.right, 2f, Wall);
         WallRight = Physics.Raycast(orientation.transform.position, orientation.transform.right, 2f, Wall);
-        Debug.DrawRay(orientation.transform.position, -transform.up * DownRaycastLength, Color.blue);
-        Debug.DrawRay(orientation.transform.position, -orientation.transform.right * 2f, Color.blue);
-        Debug.DrawRay(orientation.transform.position, orientation.transform.right * 2f, Color.blue);
-        Debug.DrawRay(orientation.transform.position, Vector3.up * UpRaycastLength, Color.blue);
+        //Debug.DrawRay(orientation.transform.position, -transform.up * DownRaycastLength, Color.blue);
+        //Debug.DrawRay(orientation.transform.position, -orientation.transform.right * 2f, Color.blue);
+        //Debug.DrawRay(orientation.transform.position, orientation.transform.right * 2f, Color.blue);
+        //Debug.DrawRay(orientation.transform.position, Vector3.up * UpRaycastLength, Color.blue);
 
         Inputt();
 
@@ -133,10 +133,8 @@ public class MovementRB : MonoBehaviour
                 if (isWallrunning) StopWallrun();
             }
 
-        }  
-        
-
-        
+        }
+      
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash && Dashed < Dashes)
         {
@@ -224,7 +222,7 @@ public class MovementRB : MonoBehaviour
     void Jump()
     {
         //rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        rb.AddForce(transform.up * JumpForce, ForceMode.Impulse);
+        rb.AddForce(transform.up * JumpForce, ForceMode.Impulse);       
         Jumped++;
     }
 
