@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MovementRB : MonoBehaviour
 {
+    public float Gravity = -35;
+    public float WallRunGravity = -15;
+    float uGravity;
     [SerializeField] float Speed;
     [SerializeField] float AirSpeed;
     [SerializeField] float WallrunSpeed;
@@ -25,7 +28,7 @@ public class MovementRB : MonoBehaviour
     [HideInInspector] public bool WallRight;
     bool DashCour;
     bool CanDash = true;
-    bool CanKick = true;
+    bool canMovedir = true;
     bool CanMultiSlide = true;
     bool DownForceAdded = false;
     bool CanMuSlideCr = true;
@@ -58,24 +61,29 @@ public class MovementRB : MonoBehaviour
         rb.freezeRotation = true;
         DownRaycastLength = 2.2f;
         UpRaycastLength = 2.5f;
+        uGravity = Gravity;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-
+        Physics.gravity = new Vector3(0, uGravity, 0);
         isGround = Physics.Raycast(orientation.transform.position, Vector3.down, DownRaycastLength, Ground);
         isSliding = Physics.Raycast(orientation.transform.position, Vector3.down, DownRaycastLength + 0.3f, Slide);
         SmthAbove = Physics.Raycast(orientation.transform.position, Vector3.up, UpRaycastLength, BlockCrouch);
         WallLeft = Physics.Raycast(orientation.transform.position, -orientation.transform.right, 2f, Wall);
         WallRight = Physics.Raycast(orientation.transform.position, orientation.transform.right, 2f, Wall);
-        //Debug.DrawRay(orientation.transform.position, -transform.up * DownRaycastLength, Color.blue);
-        //Debug.DrawRay(orientation.transform.position, -orientation.transform.right * 2f, Color.blue);
-        //Debug.DrawRay(orientation.transform.position, orientation.transform.right * 2f, Color.blue);
-        //Debug.DrawRay(orientation.transform.position, Vector3.up * UpRaycastLength, Color.blue);
 
         Inputt();
+
+       if(isWallrunning)
+        {
+            canMovedir = false;
+        }else
+        {
+            if (!isWallrunning) canMovedir = true;
+        }
 
         if(Input.GetKey(KeyCode.LeftControl))
         {
@@ -192,8 +200,8 @@ public class MovementRB : MonoBehaviour
     void movePlayer()
     {
         MoveDir = orientation.forward * vertical + orientation.right * horizontal;
-        if(isGround) rb.AddForce(MoveDir.normalized * Speed, ForceMode.Force);
-        if (!isGround) rb.AddForce(MoveDir.normalized * AirSpeed, ForceMode.Force);
+        if(isGround && canMovedir) rb.AddForce(MoveDir.normalized * Speed, ForceMode.Force);
+        if (!isGround && canMovedir) rb.AddForce(MoveDir.normalized * AirSpeed, ForceMode.Force);
     }
     void MoveCrouch()
     {
@@ -265,13 +273,13 @@ public class MovementRB : MonoBehaviour
     void StopWallrun()
     {
         isWallrunning = false;
-        rb.useGravity = true;
+        uGravity = Gravity;
     }
 
     void WallRunMovement()
     {
 
-            rb.useGravity = false;
+        uGravity = WallRunGravity;
             rb.AddForce(Camera.transform.forward * WallrunSpeed, ForceMode.Force);
             if (WallLeft) rb.AddForce(-orientation.transform.right * 20f, ForceMode.Force);
             if (WallRight) rb.AddForce(orientation.transform.right * 20f, ForceMode.Force);
