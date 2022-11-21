@@ -10,7 +10,7 @@ public class Wall : MonoBehaviour
     bool DontKill;
     float DontKillTime = 10;
     [SerializeField] LayerMask WallStick;
-    int rayLen = 30;
+    [SerializeField] int rayLen = 30;
     public bool showRaycast;
     bool firstHit;
 

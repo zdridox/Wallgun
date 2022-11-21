@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 402593391366163070}
   - component: {fileID: 3502098072094009861}
   - component: {fileID: 4361246644267636972}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,6 +80,7 @@ MonoBehaviour:
   WallStick:
     serializedVersion: 2
     m_Bits: 512
+  showRaycast: 0
 --- !u!1 &312590331753469025
 GameObject:
   m_ObjectHideFlags: 0
@@ -89,7 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6831124873939571596}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7574972915802234805}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: R (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +150,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3876048745256643242}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: MupL (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +180,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8112751657626555794}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: MupL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +210,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1186187643172557986}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: MupR (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +240,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 600551636966390587}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: MupR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +273,7 @@ GameObject:
   - component: {fileID: 3125582060124724629}
   - component: {fileID: 6573545983770319348}
   - component: {fileID: 2851913186074187423}
-  m_Layer: 7
+  m_Layer: 16
   m_Name: Cube (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,7 +321,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 79f64ed6f5d6d374d91c3a0af4070258, type: 2}
+  - {fileID: 2100000, guid: 4eaa2c3fbc9d09c4392de75efb4fa2b9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -364,7 +365,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1096840226516630370}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,7 +395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4381312813109203690}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: L (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

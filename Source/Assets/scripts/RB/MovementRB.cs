@@ -41,16 +41,19 @@ public class MovementRB : MonoBehaviour
     [SerializeField] LayerMask Slide;
     [SerializeField] LayerMask Wall;
     [SerializeField] LayerMask BlockCrouch;
+    [SerializeField] LayerMask Slower;
     [HideInInspector] public bool isGround;
     bool isSliding;
     bool isWallrunning;
     bool SmthAbove;
+    bool isSlower;
     [SerializeField] Transform orientation;
     [SerializeField] Transform Camera;
     bool CanAdd = true;
     bool Cntrl;
     int Jumped;
     int Dashed;
+    bool Slowed;
     [SerializeField] int MultiJumps;
     [SerializeField] int Dashes;
 
@@ -62,6 +65,7 @@ public class MovementRB : MonoBehaviour
         DownRaycastLength = 2.2f;
         UpRaycastLength = 2.5f;
         uGravity = Gravity;
+        Physics.IgnoreLayerCollision(16, 16);
     }
 
     // Update is called once per frame
@@ -70,6 +74,7 @@ public class MovementRB : MonoBehaviour
 
         Physics.gravity = new Vector3(0, uGravity, 0);
         isGround = Physics.Raycast(orientation.transform.position, Vector3.down, DownRaycastLength, Ground);
+        isSlower = Physics.Raycast(orientation.transform.position, Vector3.down, DownRaycastLength, Slower);
         isSliding = Physics.Raycast(orientation.transform.position, Vector3.down, DownRaycastLength + 0.3f, Slide);
         SmthAbove = Physics.Raycast(orientation.transform.position, Vector3.up, UpRaycastLength, BlockCrouch);
         WallLeft = Physics.Raycast(orientation.transform.position, -orientation.transform.right, 2f, Wall);
@@ -106,6 +111,7 @@ public class MovementRB : MonoBehaviour
         }
 
         Drag();
+        Slowerr();
 
         if(Input.GetKey(KeyCode.LeftControl) && isGround && CanAdd && CanMuSlideCr)
         {
@@ -225,6 +231,21 @@ public class MovementRB : MonoBehaviour
 
         if (!CanMove && !isWallrunning) rb.drag = CrouchDrag; else if (CanMove && isGround && !isWallrunning) rb.drag = GroundDrag;
         if (isWallrunning) rb.drag = WallRunDrag;
+    }
+
+    void Slowerr()
+    {
+        if(isSlower)
+        {
+            if(!Slowed)
+            {
+                rb.velocity = rb.velocity / 15;
+                Slowed = true;
+            }
+        } else
+        {
+            Slowed = false;
+        }
     }
 
     void Jump()

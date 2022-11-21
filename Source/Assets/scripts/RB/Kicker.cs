@@ -17,6 +17,8 @@ public class Kicker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawRay(transform.position, transform.up * 5);
+
         if(Physics.Raycast(transform.position, transform.up, out hit, 5) && hit.transform.tag == "Player")
         {
             if (canKick) StartCoroutine(Kickerr());
