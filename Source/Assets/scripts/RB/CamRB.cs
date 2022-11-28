@@ -18,27 +18,41 @@ public class CamRB : MonoBehaviour
     public float tiltspeed;
     bool tiltL;
     bool tiltR;
+    [HideInInspector] public bool Cursorr;
+    [HideInInspector] public bool CanLook = true;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        float mX = Input.GetAxis("Mouse X") * sens * Time.deltaTime;
-        float mY = Input.GetAxis("Mouse Y") * sens * Time.deltaTime;
-        yR += mX;
-        xR -= mY;
-        xR = Mathf.Clamp(xR, -90f, 90f);
+        if(!Cursorr)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        } else
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        }
 
-        transform.rotation = Quaternion.Euler(xR, yR, camTilt);
-        orientation.rotation = Quaternion.Euler(0, yR, 0);
-        PlayerModel.rotation = Quaternion.Euler(0, yR, 0);
+        if(CanLook)
+        {
+            float mX = Input.GetAxis("Mouse X") * sens * Time.deltaTime;
+            float mY = Input.GetAxis("Mouse Y") * sens * Time.deltaTime;
+            yR += mX;
+            xR -= mY;
+            xR = Mathf.Clamp(xR, -90f, 90f);
+
+            transform.rotation = Quaternion.Euler(xR, yR, camTilt);
+            orientation.rotation = Quaternion.Euler(0, yR, 0);
+            PlayerModel.rotation = Quaternion.Euler(0, yR, 0);
+        }
 
         if(mvrb.WallLeft && !mvrb.isGround && Input.GetKey(KeyCode.A))
         {

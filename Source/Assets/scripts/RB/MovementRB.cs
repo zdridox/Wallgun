@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MovementRB : MonoBehaviour
 {
+    public bool Movement = true;
     public float Gravity = -35;
     public float WallRunGravity = -15;
     float uGravity;
@@ -72,6 +73,8 @@ public class MovementRB : MonoBehaviour
     void Update()
     {
 
+
+
         Physics.gravity = new Vector3(0, uGravity, 0);
         isGround = Physics.Raycast(orientation.transform.position, Vector3.down, DownRaycastLength, Ground);
         isSlower = Physics.Raycast(orientation.transform.position, Vector3.down, DownRaycastLength, Slower);
@@ -90,7 +93,7 @@ public class MovementRB : MonoBehaviour
             if (!isWallrunning) canMovedir = true;
         }
 
-        if(Input.GetKey(KeyCode.LeftControl))
+        if(Input.GetKey(KeyCode.LeftControl) && Movement)
         {
             CanMove = false;
             Cntrl = true;
@@ -217,20 +220,26 @@ public class MovementRB : MonoBehaviour
 
     void Drag()
     {
-        if (isGround && !isWallrunning)
+        if(!Movement)
         {
-            rb.drag = GroundDrag;
-        }
-        else
+            rb.drag = 99999;
+        } else
         {
-            if(!isGround && !isWallrunning)
+            if (isGround && !isWallrunning)
             {
-                rb.drag = airDrag;
+                rb.drag = GroundDrag;
             }
-        }
+            else
+            {
+                if (!isGround && !isWallrunning)
+                {
+                    rb.drag = airDrag;
+                }
+            }
 
-        if (!CanMove && !isWallrunning) rb.drag = CrouchDrag; else if (CanMove && isGround && !isWallrunning) rb.drag = GroundDrag;
-        if (isWallrunning) rb.drag = WallRunDrag;
+            if (!CanMove && !isWallrunning) rb.drag = CrouchDrag; else if (CanMove && isGround && !isWallrunning) rb.drag = GroundDrag;
+            if (isWallrunning) rb.drag = WallRunDrag;
+        }
     }
 
     void Slowerr()

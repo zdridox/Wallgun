@@ -8,6 +8,7 @@ public class Gun : MonoBehaviour
     public GameObject OGbullet;
     public float BulletSpeed;
     public bool AutoFire;
+    [HideInInspector] public bool canShoot = true;
 
     // Start is called before the first frame update
     void Start()
@@ -18,19 +19,23 @@ public class Gun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(AutoFire)
+        if(canShoot)
         {
-            if (Input.GetMouseButton(0))
+            if (AutoFire)
             {
-                var bullet = Instantiate(OGbullet, BulletSpawn.position, BulletSpawn.rotation);
-                bullet.GetComponent<Rigidbody>().velocity = BulletSpawn.forward * BulletSpeed;
+                if (Input.GetMouseButton(0))
+                {
+                    var bullet = Instantiate(OGbullet, BulletSpawn.position, BulletSpawn.rotation);
+                    bullet.GetComponent<Rigidbody>().velocity = BulletSpawn.forward * BulletSpeed;
+                }
             }
-        } else
-        {
-            if (Input.GetMouseButtonDown(0))
+            else
             {
-                var bullet = Instantiate(OGbullet, BulletSpawn.position, BulletSpawn.rotation);
-                bullet.GetComponent<Rigidbody>().velocity = BulletSpawn.forward * BulletSpeed;
+                if (Input.GetMouseButtonDown(0))
+                {
+                    var bullet = Instantiate(OGbullet, BulletSpawn.position, BulletSpawn.rotation);
+                    bullet.GetComponent<Rigidbody>().velocity = BulletSpawn.forward * BulletSpeed;
+                }
             }
         }
     }
