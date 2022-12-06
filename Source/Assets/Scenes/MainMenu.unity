@@ -271,9 +271,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelButton: {fileID: 1820241452}
   Menu: {fileID: 0}
+  Spawn: {fileID: 0}
+  Player: {fileID: 0}
   MVRB: {fileID: 0}
+  Ammo: {fileID: 0}
   CRB: {fileID: 0}
   Gun: {fileID: 0}
+  End: {fileID: 0}
 --- !u!1 &136323305
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,6 +663,7 @@ MonoBehaviour:
   light2: {fileID: 787746793}
   light3: {fileID: 1679308263}
   light4: {fileID: 930032537}
+  rng: 0
 --- !u!850595691 &693591454
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -1657,9 +1662,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelButton: {fileID: 0}
   Menu: {fileID: 0}
+  Spawn: {fileID: 0}
+  Player: {fileID: 0}
   MVRB: {fileID: 0}
+  Ammo: {fileID: 0}
   CRB: {fileID: 0}
   Gun: {fileID: 0}
+  End: {fileID: 0}
 --- !u!1001 &1313850617
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2826,9 +2835,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelButton: {fileID: 0}
   Menu: {fileID: 0}
+  Spawn: {fileID: 0}
+  Player: {fileID: 0}
   MVRB: {fileID: 0}
+  Ammo: {fileID: 0}
   CRB: {fileID: 0}
   Gun: {fileID: 0}
+  End: {fileID: 0}
 --- !u!1 &2080100732
 GameObject:
   m_ObjectHideFlags: 0

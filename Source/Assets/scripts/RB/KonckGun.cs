@@ -9,6 +9,7 @@ public class KonckGun : MonoBehaviour
     [SerializeField] float knockPower;
     [SerializeField] float shotTimeout;
     bool canKnock = true;
+    public Ammo Ammo;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,9 +19,10 @@ public class KonckGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(1) && canKnock)
+        if(Input.GetMouseButtonDown(1) && canKnock && !Ammo.AmmoZero)
         {
             PlayerRB.AddForce(-Cam.transform.forward * knockPower, ForceMode.Impulse);
+            Ammo.RealAmmo -= 1;
             StartCoroutine(KnockTimeout());
            
         }

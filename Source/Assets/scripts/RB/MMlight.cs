@@ -8,7 +8,7 @@ public class MMlight : MonoBehaviour
     public Light light2;
     public Light light3;
     public Light light4;
-    float rng;
+    public float rng;
 
     // Start is called before the first frame update
     void Start()

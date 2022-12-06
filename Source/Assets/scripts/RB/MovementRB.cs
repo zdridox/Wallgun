@@ -42,19 +42,16 @@ public class MovementRB : MonoBehaviour
     [SerializeField] LayerMask Slide;
     [SerializeField] LayerMask Wall;
     [SerializeField] LayerMask BlockCrouch;
-    [SerializeField] LayerMask Slower;
     [HideInInspector] public bool isGround;
     bool isSliding;
     bool isWallrunning;
     bool SmthAbove;
-    bool isSlower;
     [SerializeField] Transform orientation;
     [SerializeField] Transform Camera;
     bool CanAdd = true;
     bool Cntrl;
     int Jumped;
     int Dashed;
-    bool Slowed;
     [SerializeField] int MultiJumps;
     [SerializeField] int Dashes;
 
@@ -77,7 +74,6 @@ public class MovementRB : MonoBehaviour
 
         Physics.gravity = new Vector3(0, uGravity, 0);
         isGround = Physics.Raycast(orientation.transform.position, Vector3.down, DownRaycastLength, Ground);
-        isSlower = Physics.Raycast(orientation.transform.position, Vector3.down, DownRaycastLength, Slower);
         isSliding = Physics.Raycast(orientation.transform.position, Vector3.down, DownRaycastLength + 0.3f, Slide);
         SmthAbove = Physics.Raycast(orientation.transform.position, Vector3.up, UpRaycastLength, BlockCrouch);
         WallLeft = Physics.Raycast(orientation.transform.position, -orientation.transform.right, 2f, Wall);
@@ -114,7 +110,6 @@ public class MovementRB : MonoBehaviour
         }
 
         Drag();
-        Slowerr();
 
         if(Input.GetKey(KeyCode.LeftControl) && isGround && CanAdd && CanMuSlideCr)
         {
@@ -242,20 +237,7 @@ public class MovementRB : MonoBehaviour
         }
     }
 
-    void Slowerr()
-    {
-        if(isSlower)
-        {
-            if(!Slowed)
-            {
-                rb.velocity = rb.velocity / 15;
-                Slowed = true;
-            }
-        } else
-        {
-            Slowed = false;
-        }
-    }
+
 
     void Jump()
     {

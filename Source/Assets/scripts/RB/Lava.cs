@@ -7,6 +7,7 @@ public class Lava : MonoBehaviour
     [SerializeField] float flowSpeed;
     Renderer rend;
     [SerializeField] Transform spawn;
+    public Ammo Ammo;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,5 +24,6 @@ public class Lava : MonoBehaviour
     {
         //Destroy(collision.gameObject);
         collision.transform.position = spawn.transform.position;
+        Ammo.RealAmmo = Ammo.AmmoSetup;
     }
 }

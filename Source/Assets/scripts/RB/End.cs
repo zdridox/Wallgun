@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 public class End : MonoBehaviour
 {
     [SerializeField] GameObject Menu;
-    [SerializeField] GameObject Player;
-    [SerializeField] GameObject Spawn;
     [SerializeField] MovementRB MVRB;
+    [SerializeField] Ammo Ammo;
     [SerializeField] CamRB CRB;
     [SerializeField] Gun Gun;
+    bool MenuActive;
+    public bool MenuCanOnOff = true;
 
     // Start is called before the first frame update
     void Start()
@@ -21,22 +22,42 @@ public class End : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape) && MenuCanOnOff)
         {
-            SceneManager.LoadScene("MainMenu");          
+            if(!MenuActive)
+            {
+                Menu.SetActive(true);
+                MenuActive = true;
+                MVRB.Movement = false;
+                CRB.Cursorr = true;
+                CRB.CanLook = false;
+                Gun.canShoot = false;
+                Ammo.CanDoAmmoStuff = false;
+            } else
+            {
+                Menu.SetActive(false);
+                MenuActive = false;
+                MVRB.Movement = true;
+                CRB.Cursorr = false;
+                CRB.CanLook = true;
+                Gun.canShoot = true;
+                Ammo.CanDoAmmoStuff = true;
+            }
         }
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.transform.tag == "Player")
         {
-            Player.transform.position = Spawn.transform.position;
             Menu.SetActive(true);
             MVRB.Movement = false;
             CRB.Cursorr = true;
             CRB.CanLook = false;
             Gun.canShoot = false;
+            Ammo.CanDoAmmoStuff = false;
+            MenuCanOnOff = false;
         }
     }
 }

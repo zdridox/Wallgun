@@ -8,9 +8,13 @@ public class Button : MonoBehaviour
 {
     [SerializeField] GameObject levelButton;
     [SerializeField] GameObject Menu;
+    [SerializeField] GameObject Spawn;
+    [SerializeField] GameObject Player;
     [SerializeField] MovementRB MVRB;
+    [SerializeField] Ammo Ammo;
     [SerializeField] CamRB CRB;
     [SerializeField] Gun Gun;
+    [SerializeField] End End;
     bool LevelOnOff;
 
     // Start is called before the first frame update
@@ -67,6 +71,10 @@ public class Button : MonoBehaviour
         CRB.Cursorr = false;
         CRB.CanLook = true;
         Gun.canShoot = true;
+        Player.transform.position = Spawn.transform.position;
+        Ammo.RealAmmo = Ammo.AmmoSetup;
+        Ammo.CanDoAmmoStuff = true;
+        End.MenuCanOnOff = true;
     }
 
     public void MainMenu()
