@@ -17,7 +17,7 @@ public class MMlight : MonoBehaviour
         light2.intensity = 0.3f;
         light3.intensity = 0.3f;
         light4.intensity = 0.8f;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
 

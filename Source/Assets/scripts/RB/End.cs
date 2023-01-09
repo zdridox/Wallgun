@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class End : MonoBehaviour
 {
     [SerializeField] GameObject Menu;
+    [SerializeField] GameObject Pause;
     [SerializeField] MovementRB MVRB;
     [SerializeField] Ammo Ammo;
     [SerializeField] CamRB CRB;
@@ -26,7 +27,7 @@ public class End : MonoBehaviour
         {
             if(!MenuActive)
             {
-                Menu.SetActive(true);
+                Pause.SetActive(true);
                 MenuActive = true;
                 MVRB.Movement = false;
                 CRB.Cursorr = true;
@@ -35,7 +36,7 @@ public class End : MonoBehaviour
                 Ammo.CanDoAmmoStuff = false;
             } else
             {
-                Menu.SetActive(false);
+                Pause.SetActive(false);
                 MenuActive = false;
                 MVRB.Movement = true;
                 CRB.Cursorr = false;

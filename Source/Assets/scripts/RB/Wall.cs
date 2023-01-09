@@ -65,8 +65,8 @@ public class Wall : MonoBehaviour
                 Mur = Physics.Raycast(MUR.transform.position, MUR.transform.forward, rayLen, WallStick);
                 Murb = Physics.Raycast(MURb.transform.position, MURb.transform.forward, rayLen, WallStick);
 
-                if ((bL || bLb || Mur || Murb)) { rb.AddForce(-transform.right * 30, ForceMode.Impulse); Debug.Log(""); };
-                if ((bR || bRb || Mul || Mulb)) { rb.AddForce(transform.right * 30, ForceMode.Impulse); Debug.Log(""); };
+                if ((bL || bLb || Mur || Murb)) { rb.AddForce(-transform.right * 30, ForceMode.Impulse);};
+                if ((bR || bRb || Mul || Mulb)) { rb.AddForce(transform.right * 30, ForceMode.Impulse);};
             } else
             {
                 rb.mass = 9999;

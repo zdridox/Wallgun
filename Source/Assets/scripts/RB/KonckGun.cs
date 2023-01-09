@@ -8,6 +8,7 @@ public class KonckGun : MonoBehaviour
     [SerializeField] Rigidbody PlayerRB;
     [SerializeField] float knockPower;
     [SerializeField] float shotTimeout;
+    [SerializeField] AudioClip Koncksound;
     bool canKnock = true;
     public Ammo Ammo;
     // Start is called before the first frame update
@@ -22,6 +23,7 @@ public class KonckGun : MonoBehaviour
         if(Input.GetMouseButtonDown(1) && canKnock && !Ammo.AmmoZero)
         {
             PlayerRB.AddForce(-Cam.transform.forward * knockPower, ForceMode.Impulse);
+            SoundManager.SMInstance.PlaySound(Koncksound);
             Ammo.RealAmmo -= 1;
             StartCoroutine(KnockTimeout());
            

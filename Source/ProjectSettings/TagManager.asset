@@ -29,8 +29,8 @@ TagManager:
   - Slower
   - NOWALLRUN
   - BLOCKCROUCH
-  - 
-  - 
+  - BURAKS
+  - BURAKS2
   - 
   - 
   - 
@@ -41,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: ui
+    uniqueID: 2604453607
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

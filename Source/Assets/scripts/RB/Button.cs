@@ -11,11 +11,16 @@ public class Button : MonoBehaviour
     [SerializeField] GameObject Spawn;
     [SerializeField] GameObject Player;
     [SerializeField] MovementRB MVRB;
+    [SerializeField] mmCam mmCam;
     [SerializeField] Ammo Ammo;
     [SerializeField] CamRB CRB;
     [SerializeField] Gun Gun;
     [SerializeField] End End;
+    [SerializeField] GameObject levels;
+    [SerializeField] GameObject Main;
     bool LevelOnOff;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -46,12 +51,25 @@ public class Button : MonoBehaviour
 
     public void Credits()
     {
-
+        //mmCam.Rotatee(0, 95, 0, 15);
+        mmCam.Rotatee(0, 150, 20, 15);
     }
 
     public void Settings()
     {
+        mmCam.Rotatee(90, 0, 0, 15);
+    }
 
+    public void Back()
+    {
+        mmCam.Rotatee(0, 323, 0, 15);
+    }
+
+    public void BackLevel()
+    {
+        mmCam.Rotatee(0, 323, 0, 15);
+        levels.SetActive(false);
+        Main.SetActive(true);
     }
 
     public void Exit()
@@ -59,9 +77,26 @@ public class Button : MonoBehaviour
         Application.Quit();
     }
 
-    public void loadLevel()
+    public void Levels()
+    {
+        levels.SetActive(true);
+        Main.SetActive(false);
+        mmCam.Rotatee(0, 300, 5, 15);
+    }
+
+    public void Fullscreen()
+    {
+        Screen.fullScreen = !Screen.fullScreen;
+    }
+
+    public void loadLevel1()
     {
         SceneManager.LoadScene("Level1");
+    }
+
+    public void loadLevel2()
+    {
+        SceneManager.LoadScene("Level2");
     }
 
     public void Restart()

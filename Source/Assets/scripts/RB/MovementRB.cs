@@ -33,11 +33,13 @@ public class MovementRB : MonoBehaviour
     bool CanMultiSlide = true;
     bool DownForceAdded = false;
     bool CanMuSlideCr = true;
+    bool isCROUCHED;
 
     [SerializeField] float GroundDrag;
     [SerializeField] float airDrag;
     [SerializeField] float WallRunDrag;
     [SerializeField] float CrouchDrag;
+    [SerializeField] float OutWallUp, OutWallSide;
     [SerializeField] LayerMask Ground;
     [SerializeField] LayerMask Slide;
     [SerializeField] LayerMask Wall;
@@ -54,6 +56,7 @@ public class MovementRB : MonoBehaviour
     int Dashed;
     [SerializeField] int MultiJumps;
     [SerializeField] int Dashes;
+    [SerializeField] AudioClip dashSound;
 
 
     void Start()
@@ -75,11 +78,12 @@ public class MovementRB : MonoBehaviour
         Physics.gravity = new Vector3(0, uGravity, 0);
         isGround = Physics.Raycast(orientation.transform.position, Vector3.down, DownRaycastLength, Ground);
         isSliding = Physics.Raycast(orientation.transform.position, Vector3.down, DownRaycastLength + 0.3f, Slide);
-        SmthAbove = Physics.Raycast(orientation.transform.position, Vector3.up, UpRaycastLength, BlockCrouch);
+        SmthAbove = Physics.Raycast(orientation.transform.position, Vector3.up, UpRaycastLength * 3, BlockCrouch);
         WallLeft = Physics.Raycast(orientation.transform.position, -orientation.transform.right, 2f, Wall);
         WallRight = Physics.Raycast(orientation.transform.position, orientation.transform.right, 2f, Wall);
 
         Inputt();
+
 
        if(isWallrunning)
         {
@@ -91,25 +95,35 @@ public class MovementRB : MonoBehaviour
 
         if(Input.GetKey(KeyCode.LeftControl) && Movement)
         {
+            isCROUCHED = true;
+        } else
+        {
+            if(!SmthAbove)
+            {
+                isCROUCHED = false;
+                CanMove = true;
+                Cntrl = false;
+                DownForceAdded = false;
+                transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
+                DownRaycastLength = 2.2f;
+                UpRaycastLength = 2.5f;
+            }
+        }
+
+        if(isCROUCHED)
+        {
             CanMove = false;
             Cntrl = true;
             MoveCrouch();
             transform.localScale = new Vector3(transform.localScale.x, 0.5f, transform.localScale.z);
-            if(isGround && !DownForceAdded) rb.AddForce(Vector3.down * 1.6f, ForceMode.Impulse);
+            if (isGround && !DownForceAdded) rb.AddForce(Vector3.down * 1.6f, ForceMode.Impulse);
             DownForceAdded = true;
             DownRaycastLength = 1.1f;
             UpRaycastLength = 1.4f;
-        } else
-        {
-            CanMove = true;
-            Cntrl = false;
-            DownForceAdded = false;
-            if(!SmthAbove) transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
-            DownRaycastLength = 2.2f;
-            UpRaycastLength = 2.5f;
         }
 
         Drag();
+        
 
         if(Input.GetKey(KeyCode.LeftControl) && isGround && CanAdd && CanMuSlideCr)
         {
@@ -124,7 +138,7 @@ public class MovementRB : MonoBehaviour
             }
         }
 
-        if(Input.GetKey(KeyCode.LeftControl) && CanMultiSlide && isSliding)
+        if((Input.GetKey(KeyCode.LeftControl) && CanMultiSlide && isSliding) || (isSliding && SmthAbove && CanMultiSlide))
         {
             CanMultiSlide = false;
             StartCoroutine(MultiSliding());
@@ -151,6 +165,7 @@ public class MovementRB : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && CanDash && Dashed < Dashes)
         {
             rb.AddForce(Camera.forward * DashSpeed, ForceMode.Impulse);
+            SoundManager.SMInstance.PlaySound(dashSound);
             StartCoroutine(DashCooolDooown());
             Dashed++;
         }
@@ -305,8 +320,8 @@ public class MovementRB : MonoBehaviour
         StopWallrun();
         if(JumpL)
         {
-            rb.AddForce(orientation.right * 15, ForceMode.Impulse);
-            rb.AddForce(orientation.up * 12, ForceMode.Impulse);
+            rb.AddForce(orientation.right * OutWallSide, ForceMode.Impulse);
+            rb.AddForce(orientation.up * OutWallUp, ForceMode.Impulse);
         }
     }
 
@@ -316,8 +331,8 @@ public class MovementRB : MonoBehaviour
         StopWallrun();
         if (JumpR)
         {
-            rb.AddForce(-orientation.right * 15, ForceMode.Impulse);
-            rb.AddForce(orientation.up * 12, ForceMode.Impulse);
+            rb.AddForce(-orientation.right * OutWallSide, ForceMode.Impulse);
+            rb.AddForce(orientation.up * OutWallUp, ForceMode.Impulse);
         }
     }
 }

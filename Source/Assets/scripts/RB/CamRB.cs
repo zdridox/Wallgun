@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CamRB : MonoBehaviour
 {
-    public float sens;
+    [SerializeField] float sens;
     public Transform orientation;
     public Transform PlayerModel;
     float xR;
@@ -25,21 +25,23 @@ public class CamRB : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        sens = 1 * SenseSlider.sensitivity;
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if(!Cursorr)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         } else
         {
-            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+
 
         if(CanLook)
         {

@@ -1,4 +1,4 @@
-Nazwa gry - Wallz / WallGun
+Nazwa gry -  WallGun
 FPP Parkour
 Sterowanie :
 WASD - Poruszanie
@@ -10,4 +10,4 @@ PPM - odrzut w tył
 
  
 Aby Rozpocząć WallRun trzeba wskoczyć na ścianę + A || D
-Kicker: wbieg na kicker = prędkość * 5
+ 
