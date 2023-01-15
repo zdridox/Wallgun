@@ -5,5 +5,5 @@ Mateusz Zdrodowski(zdridox) - Programowanie / LevelDesign </br>
 Tomasz Broda(Nonet1379) - Dzwiek </br>
 Michał Nalepa(M1S1AK) - 3D/2D** </br>
 <h1> BUILD </h1> </br>
- link: https://mega.nz/file/u8UWAKKB </br>
- pass: tlMmB35fHU3EW8Tw5EfxZOaQg1jgI0njA3QF6nMq7hs
+ link: https://drive.google.com/file/d/13FmHsJlJuDK2acKF2vJqMDBICBp1uv6n/view?usp=share_link </br>
+
