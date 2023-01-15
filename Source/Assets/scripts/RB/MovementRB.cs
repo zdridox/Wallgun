@@ -57,6 +57,8 @@ public class MovementRB : MonoBehaviour
     [SerializeField] int MultiJumps;
     [SerializeField] int Dashes;
     [SerializeField] AudioClip dashSound;
+    [SerializeField] GameObject walkSound;
+
 
 
     void Start()
@@ -74,10 +76,11 @@ public class MovementRB : MonoBehaviour
     {
 
 
+        Debug.DrawRay(orientation.transform.position, Vector3.down * 2.8f);
 
         Physics.gravity = new Vector3(0, uGravity, 0);
         isGround = Physics.Raycast(orientation.transform.position, Vector3.down, DownRaycastLength, Ground);
-        isSliding = Physics.Raycast(orientation.transform.position, Vector3.down, DownRaycastLength + 0.3f, Slide);
+        isSliding = Physics.Raycast(orientation.transform.position, Vector3.down, DownRaycastLength + 1.6f, Slide);
         SmthAbove = Physics.Raycast(orientation.transform.position, Vector3.up, UpRaycastLength * 3, BlockCrouch);
         WallLeft = Physics.Raycast(orientation.transform.position, -orientation.transform.right, 2f, Wall);
         WallRight = Physics.Raycast(orientation.transform.position, orientation.transform.right, 2f, Wall);
@@ -186,8 +189,16 @@ public class MovementRB : MonoBehaviour
             if(!DashCour) CanDash = true;
         }
 
-    }
+     if((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)) && isGround)
+        {
+            walkSound.SetActive(true);
+        } else
+        {
+            walkSound.SetActive(false);
+        }
 
+    }
+    
     private void FixedUpdate()
     {
         if(CanMove) movePlayer();

@@ -18,6 +18,8 @@ public class Button : MonoBehaviour
     [SerializeField] End End;
     [SerializeField] GameObject levels;
     [SerializeField] GameObject Main;
+    [SerializeField] GameObject Shotgunp, Gonp;
+    [SerializeField] GameObject Shotgun, Gon;
     bool LevelOnOff;
 
 
@@ -99,6 +101,11 @@ public class Button : MonoBehaviour
         SceneManager.LoadScene("Level2");
     }
 
+    public void loadLevel3()
+    {
+        SceneManager.LoadScene("Level3");
+    }
+
     public void Restart()
     {
         Menu.SetActive(false);
@@ -110,6 +117,10 @@ public class Button : MonoBehaviour
         Ammo.RealAmmo = Ammo.AmmoSetup;
         Ammo.CanDoAmmoStuff = true;
         End.MenuCanOnOff = true;
+        Shotgunp.SetActive(true);
+        Shotgun.SetActive(false);
+        Gonp.SetActive(true);
+        Gon.SetActive(false);
     }
 
     public void MainMenu()

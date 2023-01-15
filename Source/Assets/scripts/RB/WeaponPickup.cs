@@ -20,7 +20,7 @@ public class WeaponPickup : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.E) && Physics.Raycast(Camera.position, Camera.forward, 5f, WeaponPick))
         {
-            Destroy(Prop);
+            Prop.SetActive(false);
             Weapon.SetActive(true);
         }
     }

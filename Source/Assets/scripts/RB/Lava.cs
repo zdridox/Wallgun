@@ -7,6 +7,8 @@ public class Lava : MonoBehaviour
     [SerializeField] float flowSpeed;
     Renderer rend;
     [SerializeField] Transform spawn;
+    [SerializeField] GameObject Shotgunp, Gonp;
+    [SerializeField] GameObject Shotgun, Gon;
     [SerializeField] AudioClip DieSound;
     public Ammo Ammo;
     // Start is called before the first frame update
@@ -28,6 +30,10 @@ public class Lava : MonoBehaviour
         {
             collision.transform.position = spawn.transform.position;
             SoundManager.SMInstance.PlaySound(DieSound);
+            Shotgunp.SetActive(true);
+            Shotgun.SetActive(false);
+            Gonp.SetActive(true);
+            Gon.SetActive(false);
         } else
         {
             Destroy(collision.gameObject);
