@@ -1,4 +1,4 @@
-# GameMaker Grupa8 (Wallz / Wallgun) </br>
+# GameMaker Grupa8 (Wallgun) </br>
 **Projekt szkolny. </br>
 Gra FPP Parkour </br>
 Mateusz Zdrodowski(zdridox) - Programowanie / LevelDesign </br>
