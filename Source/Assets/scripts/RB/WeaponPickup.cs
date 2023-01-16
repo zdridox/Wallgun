@@ -22,6 +22,7 @@ public class WeaponPickup : MonoBehaviour
         {
             Prop.SetActive(false);
             Weapon.SetActive(true);
+            Wall.DestroyWalls = false;
         }
     }
 }

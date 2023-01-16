@@ -11,6 +11,7 @@ public class Lava : MonoBehaviour
     [SerializeField] GameObject Shotgun, Gon;
     [SerializeField] AudioClip DieSound;
     public Ammo Ammo;
+    public Gun gun;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,14 +31,17 @@ public class Lava : MonoBehaviour
         {
             collision.transform.position = spawn.transform.position;
             SoundManager.SMInstance.PlaySound(DieSound);
+            Ammo.RealAmmo = Ammo.AmmoSetup;
             Shotgunp.SetActive(true);
             Shotgun.SetActive(false);
             Gonp.SetActive(true);
             Gon.SetActive(false);
+            Wall.DestroyWalls = true;
+            gun.Amoo = gun.SetupAmmo;           
         } else
         {
             Destroy(collision.gameObject);
         }
-        Ammo.RealAmmo = Ammo.AmmoSetup;
+        
     }
 }

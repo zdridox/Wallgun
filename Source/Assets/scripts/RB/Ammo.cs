@@ -6,8 +6,8 @@ public class Ammo : MonoBehaviour
 {
     [SerializeField] GameObject ammo0, ammo1, ammo2, ammo3, ammo4;
     public int AmmoSetup = 0;
-    public static int RealAmmo;
-    public static bool AmmoZero;
+    public  int RealAmmo;
+    public  bool AmmoZero;
     public bool CanDoAmmoStuff = true;
     // Start is called before the first frame update
     void Start()
@@ -18,6 +18,8 @@ public class Ammo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(RealAmmo);
+
         if(CanDoAmmoStuff)
         {
             switch (RealAmmo)

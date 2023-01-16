@@ -20,6 +20,7 @@ public class Button : MonoBehaviour
     [SerializeField] GameObject Main;
     [SerializeField] GameObject Shotgunp, Gonp;
     [SerializeField] GameObject Shotgun, Gon;
+    [SerializeField] Gun gun;
     bool LevelOnOff;
 
 
@@ -117,10 +118,13 @@ public class Button : MonoBehaviour
         Ammo.RealAmmo = Ammo.AmmoSetup;
         Ammo.CanDoAmmoStuff = true;
         End.MenuCanOnOff = true;
+        Ammo.RealAmmo = Ammo.AmmoSetup;
         Shotgunp.SetActive(true);
         Shotgun.SetActive(false);
         Gonp.SetActive(true);
         Gon.SetActive(false);
+        Wall.DestroyWalls = true;
+        gun.Amoo = gun.SetupAmmo;
     }
 
     public void MainMenu()

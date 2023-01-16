@@ -13,6 +13,7 @@ public class Wall : MonoBehaviour
     [SerializeField] int rayLen = 30;
     public bool showRaycast;
     bool firstHit;
+    public static bool DestroyWalls;
 
 
     // Start is called before the first frame update
@@ -25,6 +26,12 @@ public class Wall : MonoBehaviour
 
     private void Update()
     {
+
+        if (DestroyWalls)
+        {
+            Destroy(gameObject);
+        }
+
         if(showRaycast)
         {
             Debug.DrawRay(L.transform.position, L.transform.forward * rayLen);

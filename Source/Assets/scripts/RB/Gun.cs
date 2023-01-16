@@ -12,12 +12,13 @@ public class Gun : MonoBehaviour
     [HideInInspector] public bool canShoot = true;
     [SerializeField] AudioClip ShootSound;
     [SerializeField] TMP_Text tmp;
-    [SerializeField] float Amoo;
+    public float SetupAmmo;
+    public float Amoo;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        Amoo = SetupAmmo;
     }
 
     // Update is called once per frame
